@@ -16,10 +16,7 @@ export class LocationFromIP extends LitElement {
   }
 
   static get properties() {
-    return {
-      long: { type: Number, Reflect: true },
-      lat: { type: Number, Reflect: true },
-    };
+    return {};
   }
 
   firstUpdated(changedProperties) {
@@ -41,19 +38,8 @@ export class LocationFromIP extends LitElement {
       })
       .then(data => {
         console.log(data);
-        this.long = data.longitude;
-        this.lat = data.latitude;
-        console.log('lat:', this.lat);
-        console.log('long:', this.long);
         return data;
       });
-    // .then(rawResponse => {
-    //  const geoIPData = JSON.parse(rawResponse);
-    //  console.log("hello");
-    //  console.log(geoIPData);
-    //  this.lat = geoIPData.latitude;
-    //  this.long = geoIPData.longitude;
-    // })
   }
 
   static get styles() {
@@ -73,6 +59,7 @@ export class LocationFromIP extends LitElement {
   render() {
     // this function runs every time a properties() declared variable changes
     // this means you can make new variables and then bind them this way if you like
+    // needed to reverse lat and long bc original order said that I was in antarctica
     const url = `https://maps.google.com/maps?q=${this.lat},${this.long}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
     return html`<iframe title="Where you are" src="${url}"></iframe> `;
   }
