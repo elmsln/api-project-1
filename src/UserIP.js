@@ -9,6 +9,7 @@ import { LitElement, html, css } from 'lit';
  */
 export class UserIP extends LitElement {
   // a convention I enjoy so you can change the tag name in 1 place
+  // change value here, applies to other places()
   static get tag() {
     return 'user-ip';
   }
@@ -78,7 +79,7 @@ export class UserIP extends LitElement {
       super.firstUpdated(changedProperties);
     }
     // go get an IP address based on the user generating a request
-    // to this cool, simple, annonymous IP returnings service
+    // to this cool, simple, anonymous IP returning service
     // sanity check that this wasn't set previously
     if (this.ip === null) {
       this.updateUserIP();
@@ -111,11 +112,11 @@ export class UserIP extends LitElement {
   static get styles() {
     return [
       css`
-        /* :host is a special selector meaning the stlyes to apply to the tag itself, like defaults */
+        /* :host is a special selector meaning the styles to apply to the tag itself, like defaults */
         :host {
           display: block;
         }
-        /* an unorder list is a ul tag */
+        /* an unordered list is a ul tag */
         ul {
           margin: 0 8px;
           list-style-type: square;
