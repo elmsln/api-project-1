@@ -28,8 +28,16 @@ export class UserIP extends LitElement {
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
-      ip: { type: String, reflect: true },
+      /*Add support into the properties()
+       method for Lit to be aware of a location property so that when it changes, it can be rendered in render() (Type is string) */
+
+      location: { type: String, reflect: true }, cityYouAreIn:  { type: String, reflect: true }, countryYouAreIn:  { type: String, reflect: true },
+      
+      ip: { type: String, reflect: true }, 
+    
     };
+
+      //location will have both country and city
   }
 
   // updated fires every time a property defined above changes
@@ -99,6 +107,7 @@ export class UserIP extends LitElement {
       })
       .then(data => {
         this.ip = data.ip;
+        this.location = "Your location is: " + data.cityYouAreIn+ ", " + data.countryYouAreIn; //understood that the data. references the getproperties method
         return data;
       });
   }
@@ -135,12 +144,19 @@ export class UserIP extends LitElement {
   }
 
   // this serves very little purpose but at least we're rendering the info
-  render() {
-    return html` <ul>
-      <li><strong class="ipaddress">IP address:</strong> ${this.ip}</li>
+  render() { //im still a little confused on how this works. the syntax is new to me. like the apostrophe after return html
+    return html` <ul> 
+      <li><strong class="ipaddress">IP address:</strong> ${this.ip}</li> //not a clue what this dollar sign is for I am going to just copy the format for location
+      
+      <strong class= "UserIP"> -- </strong> ${this.location} //removed new line to format like this: ip address -- location of the current ip address
+      
+      <li><strong class= "UserIP"> -- </strong> ${this.cityYouAreIn}</li> //removed new line to format like this: ip address -- location of the current ip address
+      <li><strong class= "UserIP"> -- </strong> ${this.countryYouAreIn}</li> //removed new line to format like this: ip address -- location of the current ip address
+
       <li></li>
     </ul>`;
   }
-}
+} 
+
 
 customElements.define(UserIP.tag, UserIP);
