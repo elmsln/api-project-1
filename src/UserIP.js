@@ -30,10 +30,12 @@ export class UserIP extends LitElement {
     return {
       /*Add support into the properties()
        method for Lit to be aware of a location property so that when it changes, it can be rendered in render() (Type is string) */
-
-      location: { type: String, reflect: true }, cityYouAreIn:  { type: String, reflect: true }, countryYouAreIn:  { type: String, reflect: true },
+       ip: { type: String, reflect: true }, 
+      location: { type: String, reflect: true }, 
+      cityYouAreIn:  { type: String, reflect: true }, 
+      countryYouAreIn:  { type: String, reflect: true },
       
-      ip: { type: String, reflect: true }, 
+      
     
     };
 
@@ -107,7 +109,12 @@ export class UserIP extends LitElement {
       })
       .then(data => {
         this.ip = data.ip;
-        this.location = "Your location is: " + data.cityYouAreIn+ ", " + data.countryYouAreIn; //understood that the data. references the getproperties method
+        this.cityYouAreIn = data.cityYouAreIn;
+        this.countryYouAreIn = data.countryYouAreIn;
+
+        this.location = `${data.cityYouAreIn}, ${data.countryYouAreIn}`;
+
+        //this.location = "Your location is: " + data.cityYouAreIn+ ", " + data.countryYouAreIn; //understood that the data. references the getproperties method
         return data;
       });
   }
@@ -146,12 +153,10 @@ export class UserIP extends LitElement {
   // this serves very little purpose but at least we're rendering the info
   render() { //im still a little confused on how this works. the syntax is new to me. like the apostrophe after return html
     return html` <ul> 
-      <li><strong class="ipaddress">IP address:</strong> ${this.ip}</li> //not a clue what this dollar sign is for I am going to just copy the format for location
-      
-      <strong class= "UserIP"> -- </strong> ${this.location} //removed new line to format like this: ip address -- location of the current ip address
-      
-      <li><strong class= "UserIP"> -- </strong> ${this.cityYouAreIn}</li> //removed new line to format like this: ip address -- location of the current ip address
-      <li><strong class= "UserIP"> -- </strong> ${this.countryYouAreIn}</li> //removed new line to format like this: ip address -- location of the current ip address
+    <li><strong class="ipaddress">IP address: </strong> ${this.ip}</li>
+    <li><strong class="countryYouAreIn">Country you are in: </strong> ${this.countryYouAreIn}</li>
+    <li><strong class="cityYouAreIn">City you are in: </strong> ${this.cityYouAreIn}</li>
+    <li><strong class="location">Location you are in: </strong> ${this.location}</li>
 
       <li></li>
     </ul>`;
