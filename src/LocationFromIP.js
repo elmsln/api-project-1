@@ -1,4 +1,3 @@
-// dependencies / things imported
 import { LitElement, html, css } from 'lit';
 import { UserIP } from './UserIP.js';
 
@@ -11,12 +10,15 @@ export class LocationFromIP extends LitElement {
     super();
     this.UserIpInstance = new UserIP();
     this.locationEndpoint = 'https://freegeoip.app/json/';
-    this.long = 10.305385;
-    this.lat = 77.923029;
+    this.longitude = null;
+    this.latitude = null;
   }
 
   static get properties() {
-    return {};
+    return {
+      longitude: { type: Number, reflects: true },
+      latitude: { type: Number, reflects: true },
+    };
   }
 
   firstUpdated(changedProperties) {
@@ -38,6 +40,12 @@ export class LocationFromIP extends LitElement {
       })
       .then(data => {
         console.log(data);
+        this.longitude = data.longitude;
+
+        console.log('Latitiude: ', this.latitude);
+        this.latitude = data.latitude;
+
+        console.log('Longitude: ', this.longitude);
         return data;
       });
   }
@@ -57,9 +65,7 @@ export class LocationFromIP extends LitElement {
   }
 
   render() {
-    // this function runs every time a properties() declared variable changes
-    // this means you can make new variables and then bind them this way if you like
-    const url = `https://maps.google.com/maps?q=${this.long},${this.lat}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    const url = `https://maps.google.com/maps?q=${this.latitude},${this.longitude}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
     return html`<iframe title="Where you are" src="${url}"></iframe> `;
   }
 }

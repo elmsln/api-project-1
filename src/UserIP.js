@@ -17,9 +17,9 @@ export class UserIP extends LitElement {
   constructor() {
     super();
     this.ip = null;
-    this.location = '';
-    this.city = '';
-    this.country = '';
+    this.location = 'Finding Your Location...';
+    this.city = 'Finding Your City...';
+    this.country = 'Finding Your Country...';
     this.ipLookUp = 'https://ip-fast.com/api/ip/?format=json&location=False';
   }
 
@@ -58,9 +58,8 @@ export class UserIP extends LitElement {
       })
       .then(data => {
         this.ip = data.ip;
-        this.city = data.city;
-        this.country = data.country;
-
+        this.city = `${data.city}`;
+        this.country = `${data.country}`;
         this.location = `${data.city}, ${data.country}`;
         return data;
       });
@@ -83,6 +82,7 @@ export class UserIP extends LitElement {
           margin: 0;
           padding: 0;
         }
+
         .ipaddress {
           font-style: var(--user-ip-ipaddress-font-style, italic);
         }
@@ -91,14 +91,20 @@ export class UserIP extends LitElement {
   }
 
   render() {
-    return html` <ul>
-      <li>
-        <strong class="ipaddress">IP address: ${this.ip}</strong>
-        <strong class="Country">IP address: ${this.ip}</strong>
-        <strong class="City">IP address: ${this.ip}</strong>
-      </li>
-      <li></li>
-    </ul>`;
+    return html` <p>
+        IP: ${this.ip} -- Location: ${this.location} -- Country: ${this.country}
+        -- City: ${this.city}
+      </p>
+      <p></p>
+      <ul>
+        <li><strong class="IP"> IP address: </strong> ${this.ip}</li>
+
+        <li><strong class="Location"> Location: </strong> ${this.location}</li>
+
+        <li><strong class="Country"> Country: </strong> ${this.country}</li>
+
+        <li><strong class="City"> City: </strong> ${this.city}</li>
+      </ul>`;
   }
 }
 
