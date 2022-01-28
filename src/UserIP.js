@@ -17,9 +17,9 @@ export class UserIP extends LitElement {
   constructor() {
     super();
     this.ip = null;
-    this.location = 'Finding Your Location...';
-    this.city = 'Finding Your City...';
-    this.country = 'Finding Your Country...';
+    this.location = 'Finding Your Current Location...';
+    this.city = 'Finding Your Current City...';
+    this.country = 'Finding Your Current Country...';
     this.ipLookUp = 'https://ip-fast.com/api/ip/?format=json&location=False';
   }
 
