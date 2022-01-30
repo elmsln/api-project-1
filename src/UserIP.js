@@ -10,6 +10,7 @@ export class UserIP extends LitElement {
       ip: { type: String, reflect: true },
       location: { type: String, reflect: true },
       city: { type: String, reflect: true },
+      state: { type: String, reflect: true },
       country: { type: String, reflect: true },
     };
   }
@@ -19,6 +20,7 @@ export class UserIP extends LitElement {
     this.ip = null;
     this.location = 'Finding Your Current Location...';
     this.city = 'Finding Your Current City...';
+    this.state = 'Finding Your Current State...';
     this.country = 'Finding Your Current Country...';
     this.ipLookUp = 'https://ip-fast.com/api/ip/?format=json&location=False';
   }
@@ -59,6 +61,7 @@ export class UserIP extends LitElement {
       .then(data => {
         this.ip = data.ip;
         this.city = `${data.city}`;
+        this.state = `${data.region_name}`;
         this.country = `${data.country}`;
         this.location = `${data.city}, ${data.country}`;
         return data;
@@ -90,10 +93,11 @@ export class UserIP extends LitElement {
     ];
   }
 
+  // Everything is coming up as undefined for me it worked in class but the minute i get home its undefined
   render() {
     return html` <p>
         IP: ${this.ip} -- Location: ${this.location} -- Country: ${this.country}
-        -- City: ${this.city}
+        -- City: ${this.city} -- State: ${this.state}
       </p>
       <p></p>
       <ul>
@@ -104,6 +108,8 @@ export class UserIP extends LitElement {
         <li><strong class="Country"> Country: </strong> ${this.country}</li>
 
         <li><strong class="City"> City: </strong> ${this.city}</li>
+
+        <li><strong class="State"> State: </strong> ${this.state}</li>
       </ul>`;
   }
 }

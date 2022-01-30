@@ -12,12 +12,16 @@ export class LocationFromIP extends LitElement {
     this.locationEndpoint = 'https://freegeoip.app/json/';
     this.longitude = null;
     this.latitude = null;
+    this.city = 'Finding your Current City...';
+    this.state = 'Finding your Current State...';
   }
 
   static get properties() {
     return {
       longitude: { type: Number, reflects: true },
       latitude: { type: Number, reflects: true },
+      state: { type: String, reflect: true },
+      city: { type: String, reflect: true },
     };
   }
 
@@ -40,13 +44,18 @@ export class LocationFromIP extends LitElement {
       })
       .then(data => {
         console.log(data);
+        this.latitude = data.latitude;
         this.longitude = data.longitude;
+        this.state = data.region_name;
+        this.city = data.city;
+        return data;
+        /* this.longitude = data.longitude;
 
         console.log('Latitiude: ', this.latitude);
         this.latitude = data.latitude;
 
         console.log('Longitude: ', this.longitude);
-        return data;
+        return data; */
       });
   }
 
@@ -66,7 +75,17 @@ export class LocationFromIP extends LitElement {
 
   render() {
     const url = `https://maps.google.com/maps?q=${this.latitude},${this.longitude}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-    return html`<iframe title="Where you are" src="${url}"></iframe> `;
+    return html`
+      <iframe title="Where you are" src="${url}"> </iframe>
+      <ul>
+        <a
+          href="https://www.google.com/maps/@${this.latitude},${this
+            .longitude},14z"
+        >
+          Google maps
+        </a>
+      </ul>
+    `;
   }
 }
 
