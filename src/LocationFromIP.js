@@ -1,6 +1,6 @@
-// dependencies / things imported
 import { LitElement, html, css } from 'lit';
 import { UserIP } from './UserIP.js';
+import '@lrnwebcomponents/wikipedia-query/wikipedia-query.js';
 
 export class LocationFromIP extends LitElement {
   static get tag() {
@@ -11,12 +11,21 @@ export class LocationFromIP extends LitElement {
     super();
     this.UserIpInstance = new UserIP();
     this.locationEndpoint = 'https://freegeoip.app/json/';
-    this.long = 10.305385;
-    this.lat = 77.923029;
+    this.longitude = null;
+    this.latitude = null;
+    this.city = null;
+    this.state = null;
+    this.location = 'Current Location';
   }
 
   static get properties() {
-    return {};
+    return {
+      longitude: { type: Number, reflects: true },
+      latitude: { type: Number, reflects: true },
+      state: { type: String, reflect: true },
+      city: { type: String, reflect: true },
+      location: { type: String, reflect: true },
+    };
   }
 
   firstUpdated(changedProperties) {
@@ -38,7 +47,26 @@ export class LocationFromIP extends LitElement {
       })
       .then(data => {
         console.log(data);
+        this.latitude = data.latitude;
+        this.longitude = data.longitude;
+        this.state = data.region_name;
+        this.city = data.city;
+        this.location = `${this.city}, ${this.state}`;
+
+        console.log(`${this.latitude} ${this.longitude}`);
+        console.log(`Your Location: ${this.location}`);
+
         return data;
+        /* this.longitude = data.longitude;
+
+        console.log('Latitiude: ', this.latitude);
+        this.latitude = data.latitude;
+
+        console.log('Longitude: ', this.longitude);
+        return data; 
+        
+        This didnt work so i tried again and if the new stuff doesnt work then who knows
+        */
       });
   }
 
@@ -57,10 +85,23 @@ export class LocationFromIP extends LitElement {
   }
 
   render() {
-    // this function runs every time a properties() declared variable changes
-    // this means you can make new variables and then bind them this way if you like
-    const url = `https://maps.google.com/maps?q=${this.long},${this.lat}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-    return html`<iframe title="Where you are" src="${url}"></iframe> `;
+    const url = `https://maps.google.com/maps?q=${this.latitude},${this.longitude}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    return html`
+      <iframe title="Where you are" src="${url}"> </iframe>
+      <ul>
+        <a
+          href="https://www.google.com/maps/@${this.latitude},${this
+            .longitude},14z"
+        >
+          Show Map of ${this.city}, ${this.state}, ${this.country}
+        </a>
+      </ul>
+
+      <!-- List of Wikipedia Queries -->
+      <wikipedia-query search="${this.state}"></wikipedia-query>
+      <wikipedia-query search="${this.city}"></wikipedia-query>
+      <wikipedia-query search="${this.location}"></wikipedia-query>
+    `;
   }
 }
 
