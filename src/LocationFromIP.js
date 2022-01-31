@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { UserIP } from './UserIP.js';
+import '@lrnwebcomponents/wikipedia-query/wikipedia-query.js';
 
 export class LocationFromIP extends LitElement {
   static get tag() {
@@ -12,8 +13,9 @@ export class LocationFromIP extends LitElement {
     this.locationEndpoint = 'https://freegeoip.app/json/';
     this.longitude = null;
     this.latitude = null;
-    this.city = 'Finding your Current City...';
-    this.state = 'Finding your Current State...';
+    this.city = null;
+    this.state = null;
+    this.location = 'Current Location';
   }
 
   static get properties() {
@@ -22,6 +24,7 @@ export class LocationFromIP extends LitElement {
       latitude: { type: Number, reflects: true },
       state: { type: String, reflect: true },
       city: { type: String, reflect: true },
+      location: { type: String, reflect: true },
     };
   }
 
@@ -48,6 +51,11 @@ export class LocationFromIP extends LitElement {
         this.longitude = data.longitude;
         this.state = data.region_name;
         this.city = data.city;
+        this.location = `${this.city}, ${this.state}`;
+
+        console.log(`${this.latitude} ${this.longitude}`);
+        console.log(`Your Location: ${this.location}`);
+
         return data;
         /* this.longitude = data.longitude;
 
@@ -55,7 +63,10 @@ export class LocationFromIP extends LitElement {
         this.latitude = data.latitude;
 
         console.log('Longitude: ', this.longitude);
-        return data; */
+        return data; 
+        
+        This didnt work so i tried again and if the new stuff doesnt work then who knows
+        */
       });
   }
 
@@ -82,9 +93,14 @@ export class LocationFromIP extends LitElement {
           href="https://www.google.com/maps/@${this.latitude},${this
             .longitude},14z"
         >
-          Google maps
+          Show Map of ${this.city}, ${this.state}, ${this.country}
         </a>
       </ul>
+
+      <!-- List of Wikipedia Queries -->
+      <wikipedia-query search="${this.state}"></wikipedia-query>
+      <wikipedia-query search="${this.city}"></wikipedia-query>
+      <wikipedia-query search="${this.location}"></wikipedia-query>
     `;
   }
 }

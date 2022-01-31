@@ -22,10 +22,10 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "lit": "^2.1.1"
+    "lit": "^2.1.1",
+    "@lrnwebcomponents/wikipedia-query": "^4.0.6"
   },
   "devDependencies": {
-    "@lrnwebcomponents/wikipedia-query": "^4.0.6",
     "@lrnwebcomponents/meme-maker": "^4.0.6",
     "@lrnwebcomponents/deduping-fix": "^4.0.0",
     "patch-package": "6.4.7",

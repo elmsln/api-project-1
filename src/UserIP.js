@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import '@lrnwebcomponents/wikipedia-query/wikipedia-query.js';
 
 export class UserIP extends LitElement {
   static get tag() {
@@ -95,11 +96,14 @@ export class UserIP extends LitElement {
 
   // Everything is coming up as undefined for me it worked in class but the minute i get home its undefined
   render() {
-    return html` <p>
+    return html`
+      <p>
         IP: ${this.ip} -- Location: ${this.location} -- Country: ${this.country}
         -- City: ${this.city} -- State: ${this.state}
       </p>
       <p></p>
+
+      <!-- List of Location Details -->
       <ul>
         <li><strong class="IP"> IP address: </strong> ${this.ip}</li>
 
@@ -110,7 +114,8 @@ export class UserIP extends LitElement {
         <li><strong class="City"> City: </strong> ${this.city}</li>
 
         <li><strong class="State"> State: </strong> ${this.state}</li>
-      </ul>`;
+      </ul>
+    `;
   }
 }
 
