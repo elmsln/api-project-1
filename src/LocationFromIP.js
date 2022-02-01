@@ -15,7 +15,7 @@ export class LocationFromIP extends LitElement {
     this.latitude = null;
     this.city = null;
     this.state = null;
-    this.location = 'Current Location';
+    this.location = null;
   }
 
   static get properties() {

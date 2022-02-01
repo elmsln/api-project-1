@@ -60,6 +60,7 @@ export class UserIP extends LitElement {
         return false;
       })
       .then(data => {
+        console.log(data);
         this.ip = data.ip;
         this.city = `${data.city}`;
         this.state = `${data.region_name}`;
